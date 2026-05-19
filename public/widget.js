@@ -23,9 +23,9 @@
   // ── Styles ────────────────────────────────────────────────────────────────
   var style = document.createElement('style');
   style.textContent = [
-    '#chinchi-fab{position:fixed;bottom:96px;right:24px;width:56px;height:56px;background:#111;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.3);z-index:99998;transition:transform .2s,box-shadow .2s}',
+    '#chinchi-fab{position:fixed;bottom:24px;right:24px;width:56px;height:56px;background:#111;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.3);z-index:99998;transition:transform .2s,box-shadow .2s}',
     '#chinchi-fab:hover{transform:scale(1.08);box-shadow:0 6px 24px rgba(0,0,0,.4)}',
-    '#chinchi-win{position:fixed;bottom:164px;right:24px;width:360px;height:520px;background:#fff;border-radius:16px;box-shadow:0 8px 40px rgba(0,0,0,.2);z-index:99999;display:none;flex-direction:column;overflow:hidden;font-family:\'Inter\',-apple-system,BlinkMacSystemFont,sans-serif}',
+    '#chinchi-win{position:fixed;bottom:92px;right:24px;width:360px;height:520px;background:#fff;border-radius:16px;box-shadow:0 8px 40px rgba(0,0,0,.2);z-index:99999;display:none;flex-direction:column;overflow:hidden;font-family:\'Inter\',-apple-system,BlinkMacSystemFont,sans-serif}',
     '#chinchi-win.open{display:flex}',
     '#chinchi-header{background:#111;color:#fff;padding:14px 16px;display:flex;align-items:center;gap:10px;flex-shrink:0}',
     '#chinchi-avatar{width:36px;height:36px;border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:#d61a16}',
@@ -51,7 +51,7 @@
     '#chinchi-send:hover{background:#b51512;transform:scale(1.05)}',
     '#chinchi-send svg{width:18px;height:18px;fill:#fff}',
     '#chinchi-send:disabled{opacity:.5;cursor:not-allowed;transform:none}',
-    '@media(max-width:420px){#chinchi-fab{bottom:82px;right:16px}#chinchi-win{width:calc(100vw - 20px);right:10px;bottom:150px;height:68vh}}'
+    '@media(max-width:420px){#chinchi-fab{bottom:16px;right:16px}#chinchi-win{width:calc(100vw - 20px);right:10px;bottom:84px;height:72vh}}'
   ].join('');
   document.head.appendChild(style);
 
