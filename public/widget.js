@@ -24,6 +24,9 @@
   var style = document.createElement('style');
   style.textContent = [
     '#chinchi-fab{position:fixed;bottom:24px;right:24px;width:56px;height:56px;background:#111;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.3);z-index:99998;transition:transform .2s,box-shadow .2s}',
+    '#chinchi-bubble{position:fixed;bottom:92px;right:16px;background:#fff;color:#111;font-family:\'Inter\',-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;font-weight:500;padding:10px 14px;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,.15);z-index:99997;white-space:nowrap;cursor:pointer;animation:chFadeIn .3s ease}',
+    '#chinchi-bubble::after{content:\'\';position:absolute;bottom:-5px;right:22px;width:10px;height:10px;background:#fff;transform:rotate(45deg);box-shadow:2px 2px 4px rgba(0,0,0,.06)}',
+    '@keyframes chFadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}',
     '#chinchi-fab:hover{transform:scale(1.08);box-shadow:0 6px 24px rgba(0,0,0,.4)}',
     '#chinchi-win{position:fixed;bottom:92px;right:24px;width:360px;height:520px;background:#fff;border-radius:16px;box-shadow:0 8px 40px rgba(0,0,0,.2);z-index:99999;display:none;flex-direction:column;overflow:hidden;font-family:\'Inter\',-apple-system,BlinkMacSystemFont,sans-serif}',
     '#chinchi-win.open{display:flex}',
@@ -58,6 +61,7 @@
   // ── HTML ──────────────────────────────────────────────────────────────────
   var container = document.createElement('div');
   container.innerHTML = [
+    '<div id="chinchi-bubble">¿Necesitas ayuda? 😊</div>',
     '<button id="chinchi-fab" title="Chat con Chinchi" aria-label="Abrir chat"><img src="https://megustasucre.com/imagenes/logos/logo_me_gusta_sucre_of/SVG/logo_chinchi.svg" alt="Chinchi" style="width:42px;height:42px;object-fit:contain;filter:brightness(0) invert(1)" /></button>',
     '<div id="chinchi-win" role="dialog" aria-label="Chat Chinchi">',
       '<div id="chinchi-header">',
@@ -80,11 +84,24 @@
   document.body.appendChild(container);
 
   var fab    = document.getElementById('chinchi-fab');
+  var bubble = document.getElementById('chinchi-bubble');
   var win    = document.getElementById('chinchi-win');
   var msgs   = document.getElementById('chinchi-msgs');
   var input  = document.getElementById('chinchi-input');
   var send   = document.getElementById('chinchi-send');
   var close  = document.getElementById('chinchi-close');
+
+  // Show bubble after 2s, auto-hide after 8s
+  bubble.style.display = 'none';
+  setTimeout(function () {
+    bubble.style.display = 'block';
+    setTimeout(function () { bubble.style.display = 'none'; }, 8000);
+  }, 2000);
+
+  bubble.addEventListener('click', function () {
+    bubble.style.display = 'none';
+    fab.click();
+  });
 
   // ── Helpers ───────────────────────────────────────────────────────────────
   function addMsg(text, who) {
@@ -140,6 +157,7 @@
 
   // ── Events ────────────────────────────────────────────────────────────────
   fab.addEventListener('click', function () {
+    bubble.style.display = 'none';
     win.classList.add('open');
     fab.style.display = 'none';
     if (!welcomed) {
