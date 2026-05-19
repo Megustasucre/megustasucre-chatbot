@@ -23,7 +23,7 @@
   // ── Styles ────────────────────────────────────────────────────────────────
   var style = document.createElement('style');
   style.textContent = [
-    '#chinchi-fab{position:fixed;bottom:96px;right:24px;width:56px;height:56px;background:#fff;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.25);z-index:99998;transition:transform .2s,box-shadow .2s}',
+    '#chinchi-fab{position:fixed;bottom:96px;right:24px;width:56px;height:56px;background:#111;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.3);z-index:99998;transition:transform .2s,box-shadow .2s}',
     '#chinchi-fab:hover{transform:scale(1.08);box-shadow:0 6px 24px rgba(0,0,0,.4)}',
     '#chinchi-win{position:fixed;bottom:164px;right:24px;width:360px;height:520px;background:#fff;border-radius:16px;box-shadow:0 8px 40px rgba(0,0,0,.2);z-index:99999;display:none;flex-direction:column;overflow:hidden;font-family:\'Inter\',-apple-system,BlinkMacSystemFont,sans-serif}',
     '#chinchi-win.open{display:flex}',
@@ -58,7 +58,7 @@
   // ── HTML ──────────────────────────────────────────────────────────────────
   var container = document.createElement('div');
   container.innerHTML = [
-    '<button id="chinchi-fab" title="Chat con Chinchi" aria-label="Abrir chat"><img src="https://megustasucre.com/imagenes/logos/logo_me_gusta_sucre_of/SVG/logo_chinchi.svg" alt="Chinchi" style="width:42px;height:42px;object-fit:contain" /></button>',
+    '<button id="chinchi-fab" title="Chat con Chinchi" aria-label="Abrir chat"><img src="https://megustasucre.com/imagenes/logos/logo_me_gusta_sucre_of/SVG/logo_chinchi.svg" alt="Chinchi" style="width:42px;height:42px;object-fit:contain;filter:brightness(0) invert(1)" /></button>',
     '<div id="chinchi-win" role="dialog" aria-label="Chat Chinchi">',
       '<div id="chinchi-header">',
         '<div id="chinchi-avatar"><img src="https://megustasucre.com/imagenes/logos/logo_me_gusta_sucre_of/SVG/logo_chinchi.svg" alt="Chinchi" /></div>',
