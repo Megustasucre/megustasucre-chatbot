@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: megustasucre-chatbot
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start
+    plan: free
+    envVars:
+      - key: GROQ_API_KEY
+        sync: false
+      - key: PORT
+        value: 3001
