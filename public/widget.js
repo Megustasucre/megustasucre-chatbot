@@ -28,7 +28,8 @@
     '#chinchi-win{position:fixed;bottom:164px;right:24px;width:360px;height:520px;background:#fff;border-radius:16px;box-shadow:0 8px 40px rgba(0,0,0,.2);z-index:99999;display:none;flex-direction:column;overflow:hidden;font-family:\'Inter\',-apple-system,BlinkMacSystemFont,sans-serif}',
     '#chinchi-win.open{display:flex}',
     '#chinchi-header{background:#111;color:#fff;padding:14px 16px;display:flex;align-items:center;gap:10px;flex-shrink:0}',
-    '#chinchi-avatar{width:36px;height:36px;background:#d61a16;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}',
+    '#chinchi-avatar{width:36px;height:36px;border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:#d61a16}',
+    '#chinchi-avatar img{width:100%;height:100%;object-fit:cover}',
     '#chinchi-info{flex:1}',
     '#chinchi-name{font-weight:700;font-size:15px;line-height:1.2}',
     '#chinchi-sub{font-size:11px;color:#aaa;margin-top:1px}',
@@ -57,10 +58,10 @@
   // ── HTML ──────────────────────────────────────────────────────────────────
   var container = document.createElement('div');
   container.innerHTML = [
-    '<button id="chinchi-fab" title="Chat con Chinchi" aria-label="Abrir chat">🐭</button>',
+    '<button id="chinchi-fab" title="Chat con Chinchi" aria-label="Abrir chat"><img src="https://megustasucre.com/imagenes/logos/logo_me_gusta_sucre_of/SVG/logo_chinchi.svg" alt="Chinchi" style="width:36px;height:36px;object-fit:contain" /></button>',
     '<div id="chinchi-win" role="dialog" aria-label="Chat Chinchi">',
       '<div id="chinchi-header">',
-        '<div id="chinchi-avatar">🐭</div>',
+        '<div id="chinchi-avatar"><img src="https://megustasucre.com/imagenes/logos/logo_me_gusta_sucre_of/SVG/logo_chinchi.svg" alt="Chinchi" /></div>',
         '<div id="chinchi-info">',
           '<div id="chinchi-name">Chinchi</div>',
           '<div id="chinchi-sub">Asistente de Me Gusta Sucre</div>',
