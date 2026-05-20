@@ -91,7 +91,7 @@ Website: megustasucre.com/cafe
 
 === ME GUSTA SPANISH SCHOOL ===
 Address: Audiencia #97, Sucre (historic center)
-WhatsApp: +591 743 25725 | wa.me/59174325725
+WhatsApp: +591 734 25725 | wa.me/59173425725
 Email: info@megustaspanish.com
 Website: megustaspanish.com
 Hours: Mon–Fri 8:20am–12:30pm / 2:20pm–6:30pm | Sat 8:20am–12:30pm
