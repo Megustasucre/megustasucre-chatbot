@@ -20,6 +20,17 @@
 
   var welcomed = false;
 
+  // Detect page language from URL param or html[lang]
+  var urlLang = new URLSearchParams(window.location.search).get('lang');
+  var pageLang = urlLang || document.documentElement.lang || 'es';
+  var isEN = pageLang.toLowerCase().startsWith('en');
+
+  var bubbleText  = isEN ? 'Need help? 😊' : '¿Necesitas ayuda? 😊';
+  var placeholderText = isEN ? 'Type a message...' : 'Escribe un mensaje...';
+  var welcomeText = isEN
+    ? "Hi! I'm Chinchi, your Me Gusta Sucre guide. Ask me about the hostal, Spanish classes, the café, or anything about Sucre!"
+    : '¡Hola! 🐭 Soy Chinchi, tu guía en Me Gusta Sucre. Puedo ayudarte con el hostal, las clases de español, el café y todo sobre Sucre.';
+
   // ── Styles ────────────────────────────────────────────────────────────────
   var style = document.createElement('style');
   style.textContent = [
@@ -61,7 +72,7 @@
   // ── HTML ──────────────────────────────────────────────────────────────────
   var container = document.createElement('div');
   container.innerHTML = [
-    '<div id="chinchi-bubble">¿Necesitas ayuda? 😊</div>',
+    '<div id="chinchi-bubble"></div>',
     '<button id="chinchi-fab" title="Chat con Chinchi" aria-label="Abrir chat"><img src="https://megustasucre.com/imagenes/logos/logo_me_gusta_sucre_of/SVG/logo_chinchi.svg" alt="Chinchi" style="width:42px;height:42px;object-fit:contain;filter:brightness(0) invert(1)" /></button>',
     '<div id="chinchi-win" role="dialog" aria-label="Chat Chinchi">',
       '<div id="chinchi-header">',
@@ -90,6 +101,10 @@
   var input  = document.getElementById('chinchi-input');
   var send   = document.getElementById('chinchi-send');
   var close  = document.getElementById('chinchi-close');
+
+  // Set bubble text and input placeholder based on language
+  bubble.textContent = bubbleText;
+  document.getElementById('chinchi-input').placeholder = placeholderText;
 
   // Show bubble after 2s, auto-hide after 8s
   bubble.style.display = 'none';
@@ -163,7 +178,7 @@
     if (!welcomed) {
       welcomed = true;
       setTimeout(function () {
-        addMsg('¡Hola! 🐭 Soy Chinchi, tu guía en Me Gusta Sucre. Puedo ayudarte con el hostal, las clases de español, el café y todo sobre Sucre.\n\nHi! I\'m Chinchi, your Me Gusta Sucre guide. Ask me about the hostal, Spanish classes, the café, or anything about Sucre!', 'bot');
+        addMsg(welcomeText, 'bot');
       }, 300);
     }
     setTimeout(function () { input.focus(); }, 400);
