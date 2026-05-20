@@ -5,7 +5,7 @@ const axios = require('axios');
 const path = require('path');
 const KNOWLEDGE_BASE = require('./knowledge');
 
-const { GROQ_API_KEY, TAVILY_API_KEY } = process.env;
+const { GROQ_API_KEY, TAVILY_API_KEY, WHATSAPP_TOKEN, WHATSAPP_PHONE_ID, WEBHOOK_VERIFY_TOKEN } = process.env;
 const PORT = process.env.PORT || 3001;
 
 const app = express();
@@ -104,6 +104,68 @@ app.post('/chat', async (req, res) => {
   } catch (err) {
     console.error('Groq error:', err.message);
     res.status(500).json({ error: 'AI unavailable' });
+  }
+});
+
+// ── WhatsApp Webhook ──────────────────────────────────────────────────────────
+
+// Verification (Meta calls this when you set up the webhook)
+app.get('/webhook', (req, res) => {
+  const mode      = req.query['hub.mode'];
+  const token     = req.query['hub.verify_token'];
+  const challenge = req.query['hub.challenge'];
+  if (mode === 'subscribe' && token === WEBHOOK_VERIFY_TOKEN) {
+    res.status(200).send(challenge);
+  } else {
+    res.status(403).send('Forbidden');
+  }
+});
+
+// Incoming messages
+app.post('/webhook', async (req, res) => {
+  res.sendStatus(200); // Respond immediately so Meta doesn't retry
+
+  const entry   = req.body.entry?.[0];
+  const change  = entry?.changes?.[0];
+  const message = change?.value?.messages?.[0];
+
+  if (!message || message.type !== 'text') return;
+
+  const from      = message.from;
+  const text      = message.text.body;
+  const sessionId = 'wa_' + from;
+
+  if (!sessions[sessionId]) sessions[sessionId] = [];
+  sessions[sessionId].push({ role: 'user', content: text.trim() });
+  if (sessions[sessionId].length > 12) sessions[sessionId] = sessions[sessionId].slice(-12);
+
+  let systemPrompt = KNOWLEDGE_BASE;
+  if (needsRealtime(text)) {
+    const searchResult = await webSearch(text);
+    if (searchResult) systemPrompt = `${KNOWLEDGE_BASE}\n\n${searchResult}`;
+  }
+
+  try {
+    const aiRes = await axios.post(
+      'https://api.groq.com/openai/v1/chat/completions',
+      {
+        model: 'llama-3.3-70b-versatile',
+        max_tokens: 350,
+        messages: [{ role: 'system', content: systemPrompt }, ...sessions[sessionId]],
+      },
+      { headers: { Authorization: `Bearer ${GROQ_API_KEY}`, 'Content-Type': 'application/json' } }
+    );
+
+    const reply = aiRes.data.choices[0].message.content;
+    sessions[sessionId].push({ role: 'assistant', content: reply });
+
+    await axios.post(
+      `https://graph.facebook.com/v19.0/${WHATSAPP_PHONE_ID}/messages`,
+      { messaging_product: 'whatsapp', to: from, type: 'text', text: { body: reply } },
+      { headers: { Authorization: `Bearer ${WHATSAPP_TOKEN}`, 'Content-Type': 'application/json' } }
+    );
+  } catch (err) {
+    console.error('WhatsApp webhook error:', err.message);
   }
 });
 
