@@ -38,22 +38,19 @@ async function webSearch(query) {
     const res = await axios.post(
       'https://api.tavily.com/search',
       {
+        api_key: TAVILY_API_KEY,
         query: `${query} Sucre Bolivia`,
         search_depth: 'basic',
         max_results: 3,
         include_answer: true,
       },
-      {
-        headers: {
-          Authorization: `Bearer ${TAVILY_API_KEY}`,
-          'Content-Type': 'application/json',
-        },
-        timeout: 5000,
-      }
+      { timeout: 6000 }
     );
     const { answer, results } = res.data;
-    const snippets = results.map(r => `- ${r.title}: ${r.content.slice(0, 200)}`).join('\n');
-    return `Información actual de internet:\n${answer || ''}\n${snippets}`;
+    const snippets = (results || []).map(r => `- ${r.title}: ${r.content.slice(0, 250)}`).join('\n');
+    const context = [answer, snippets].filter(Boolean).join('\n');
+    if (!context.trim()) return null;
+    return `INFORMACIÓN EN TIEMPO REAL (usa esto para responder, es información actual de hoy):\n${context}`;
   } catch (err) {
     console.error('Tavily error:', err.message);
     return null;
